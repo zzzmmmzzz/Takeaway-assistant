@@ -48,7 +48,7 @@ import cn.edu.zucc.takeaway.takeawayUtil;
 		
 		private JMenuItem menuItem_Merchantlist=new JMenuItem("商家信息查询");
 		private JMenuItem menuItem_Merchantadd=new JMenuItem("增加商家");
-		private JMenuItem menuItem_Merchantdelete=new JMenuItem("删除商家");
+		private JMenuItem menuItem_goodsManager=new JMenuItem("商品管理");
 		
 		private JMenuItem menuItem_userlist=new JMenuItem("管理员信息查询");
 		private JMenuItem menuItem_userManager=new JMenuItem("密码修改");
@@ -79,8 +79,8 @@ import cn.edu.zucc.takeaway.takeawayUtil;
 			menuItem_Merchantlist.addActionListener(this);
 			menu_Merchant.add(menuItem_Merchantadd);
 			menuItem_Merchantadd.addActionListener(this);
-			menu_Merchant.add(menuItem_Merchantdelete);
-			menuItem_Merchantdelete.addActionListener(this);
+			menu_Merchant.add(menuItem_goodsManager);
+			menuItem_goodsManager.addActionListener(this);
 			menubar.add(menu_Merchant);
 			
 			menu_user.add(menuItem_userlist);
@@ -132,6 +132,14 @@ import cn.edu.zucc.takeaway.takeawayUtil;
 			else if(e.getSource()==this.menuItem_Merchantlist) {
 				FrmUMerchantManager fum= new FrmUMerchantManager(this,"商家管理",true);
 				fum.setVisible(true);
+			}
+			else if(e.getSource()==this.menuItem_goodsManager) {
+				FrmUgoodManager gd=new FrmUgoodManager();
+				gd.setVisible(true);
+			}
+			else if(e.getSource()==this.menuItem_cuslist) {
+				FrmUcuslist list=new FrmUcuslist(this,"用户管理i",true);
+				list.setVisible(true);
 			}
 		}
 

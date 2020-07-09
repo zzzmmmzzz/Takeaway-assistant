@@ -7,6 +7,7 @@ public class Beangoods_details {
   private float goods_price;
   private float goods_reduce;
 
+  public static final String[] tableTitles={"商品编号","所属类别编号","商品名","价格","优惠价格"};
 public String getGoods_id() {
 	return goods_id;
 }
@@ -36,6 +37,15 @@ public float getGoods_reduce() {
 }
 public void setGoods_reduce(float goods_reduce) {
 	this.goods_reduce = goods_reduce;
+}
+public String getCell(int col) {
+	// TODO Auto-generated method stub
+	if(col==0) return String.valueOf(getGoods_id());
+	else if(col==1) return String.valueOf(getCategories_id());
+	else if(col==2) return String.valueOf(getGoods_name());
+	else if(col==3) return String.valueOf(getGoods_price());
+	else if(col==4) return String.valueOf(getGoods_reduce());
+	else return "";
 }
   
 }

@@ -23,7 +23,7 @@ public class MerchantManager implements IMerchantManager{
 		try {
 			conn=DBUtil.getConnection();
 			String sql="select Merchant_id,Merchant_name,Merchant_star,Merchant_avgc,Merchant_total"
-					+ " from merchant where Merchant_id=?";
+					+ " from merchant where Merchant_name=?";
 			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
 			pst.setString(1,text);
 			java.sql.ResultSet rs=pst.executeQuery();
@@ -52,7 +52,48 @@ public class MerchantManager implements IMerchantManager{
 	}
 	return result;
 	}
-	
+     public  void createMerchant(Beanmerchant mc) throws BaseException{
+		
+		
+		if( "".equals(mc.getMerchant_id()) || "".equals(mc.getMerchant_name())){
+			throw new BusinessException("商家编号，姓名不能为空");
+		}
+		
+		Connection conn=null;
+		try {
+			conn=DBUtil.getConnection();
+			String sql="select * from merchant where Merchant_id=?";
+			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+			pst.setString(1,mc.getMerchant_id());
+			java.sql.ResultSet rs=pst.executeQuery();
+			if(rs.next()) throw new BusinessException("商家已存在");
+			rs.close();
+			pst.close();
+			sql="insert into merchant(Merchant_id,Merchant_name,Merchant_star,Merchant_avgc,Mercahnt_total) "
+					+ "values(?,?,?,?,?)";
+			pst=conn.prepareStatement(sql);
+			pst.setString(1, mc.getMerchant_id());
+			pst.setString(2, mc.getMerchant_name());
+			pst.setInt(3, mc.getMerchant_star());
+			pst.setFloat(4, mc.getMerchant_avgc());
+			pst.setFloat(4, mc.getMerchant_total());
+			pst.execute();
+			pst.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DbException(e);
+		}
+		finally{
+			if(conn!=null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		
+	}
 	public List<Beanmerchant> loadAll() throws BaseException {
 		List<Beanmerchant> result=new ArrayList<Beanmerchant>();
 		Connection conn=null;

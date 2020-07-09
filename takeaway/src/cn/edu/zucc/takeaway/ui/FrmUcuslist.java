@@ -9,9 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -22,22 +20,18 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-
 import cn.edu.zucc.takeaway.takeawayUtil;
 import cn.edu.zucc.takeaway.control.MerchantManager;
 import cn.edu.zucc.takeaway.control.customerManager;
-import cn.edu.zucc.takeaway.control.userManager;
 import cn.edu.zucc.takeaway.model.Beancus;
 import cn.edu.zucc.takeaway.model.Beanmerchant;
 import cn.edu.zucc.takeaway.util.BaseException;
 
-
-
-public class FrmUMerchantManager extends JDialog implements ActionListener {
+public class FrmUcuslist extends JDialog implements ActionListener{
 	private JPanel toolBar = new JPanel();
-	private Button btnAdd = new Button("添加新商家");
-	private Button btnModify = new Button("修改商家");
-	private Button btnDelete = new Button("注销商家");
+	//private Button btnAdd = new Button("添加新商家");
+	//private Button btnModify = new Button("修改商家");
+	//private Button btnDelete = new Button("注销商家");
 
 	
     private JComboBox cmbReadertype=null;
@@ -45,24 +39,28 @@ public class FrmUMerchantManager extends JDialog implements ActionListener {
 	private JTextField edtKeyword = new JTextField(10);
 	private Button btnSearch = new Button("查询");
 	
-	private Object tblTitle[]={"商家编号","商家名","商家星级","人均消费","总销量"};
+	private Object tblTitle[]={"用户编号","用户名","用户性别","密码","电话","邮箱","城市","注册时间","是否会员"};
 	private Object tblData[][];
-	List<Beanmerchant> merchant=null;
+	List<Beancus> cus=null;
 	DefaultTableModel tablmod=new DefaultTableModel();
 	private JTable MerchantTable=new JTable(tablmod);
 	private void reloadTable(){
 		try {
 			int n=this.cmbReadertype.getSelectedIndex();
 			int rtId=0;
-			merchant=(new MerchantManager()).loadAll();
+			cus=(new customerManager()).loadAll();
 			//merchant=(new MerchantManager()).searchReader(this.edtKeyword.getText(), rtId);
-			tblData =new Object[merchant.size()][5];
-			for(int i=0;i<merchant.size();i++){
-				tblData[i][0]=merchant.get(i).getMerchant_id();
-				tblData[i][1]=merchant.get(i).getMerchant_name();	
-				tblData[i][2]=merchant.get(i).getMerchant_star();
-				tblData[i][3]=merchant.get(i).getMerchant_avgc();
-				tblData[i][4]=merchant.get(i).getMerchant_total();
+			tblData =new Object[cus.size()][9];
+			for(int i=0;i<cus.size();i++){
+				tblData[i][0]=cus.get(i).getCus_id();
+				tblData[i][1]=cus.get(i).getCus_name();	
+				tblData[i][2]=cus.get(i).getCus_sex();
+				tblData[i][3]=cus.get(i).getCus_password();
+				tblData[i][4]=cus.get(i).getCus_tel();
+				tblData[i][5]=cus.get(i).getCus_email();
+				tblData[i][6]=cus.get(i).getCus_city();
+				tblData[i][7]=cus.get(i).getCus_regtime();
+				tblData[i][8]=cus.get(i).getCus_vip();
 				tablmod.setDataVector(tblData,tblTitle);
 				this.MerchantTable.validate();
 				this.MerchantTable.repaint();
@@ -73,16 +71,16 @@ public class FrmUMerchantManager extends JDialog implements ActionListener {
 		}
 	}
 	
-	public FrmUMerchantManager(Frame f, String s, boolean b) {
+	public FrmUcuslist(Frame f, String s, boolean b) {
 		super(f, s, b);
 		
-		List<Beanmerchant> mc =null;
+		List<Beancus> cus =null;
 		try {
-			mc=(new MerchantManager()).loadAll();
-			String[] strTypes=new String[mc.size()+1];
+			cus=(new customerManager()).loadAll();
+			String[] strTypes=new String[cus.size()+1];
 			strTypes[0]="";
-			for(int i=0;i<mc.size();i++) {
-				strTypes[i+1]=mc.get(i).getMerchant_id();
+			for(int i=0;i<cus.size();i++) {
+				strTypes[i+1]=cus.get(i).getCus_id();
 			}
 			cmbReadertype=new JComboBox(strTypes);
 		} catch (BaseException e1) {
@@ -92,9 +90,9 @@ public class FrmUMerchantManager extends JDialog implements ActionListener {
 		
 		toolBar.setLayout(new FlowLayout(FlowLayout.LEFT));
 		toolBar.add(MerchantTable);
-		toolBar.add(btnAdd);
-		toolBar.add(this.btnDelete);
-		toolBar.add(btnModify);
+		//toolBar.add(btnAdd);
+		//toolBar.add(this.btnDelete);
+		//toolBar.add(btnModify);
 		toolBar.add(edtKeyword);
 		toolBar.add(btnSearch);
 
@@ -115,9 +113,9 @@ public class FrmUMerchantManager extends JDialog implements ActionListener {
 		this.validate();
 		
 
-		this.btnAdd.addActionListener(this);
-		this.btnDelete.addActionListener(this);
-		this.btnModify.addActionListener(this);
+		//this.btnAdd.addActionListener(this);
+		//this.btnDelete.addActionListener(this);
+		//this.btnModify.addActionListener(this);
 		this.btnSearch.addActionListener(this);
 		this.edtKeyword.addActionListener(this);
 		this.addWindowListener(new WindowAdapter() {
@@ -126,35 +124,14 @@ public class FrmUMerchantManager extends JDialog implements ActionListener {
 			}
 		});
 	}
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-	      if(e.getSource()==this.btnAdd) {
-	    	  
-	      }
-	      else if(e.getSource()==this.btnDelete) {
-	    	  int i=this.MerchantTable.getSelectedRow();
-				if(i<0) {
-					JOptionPane.showMessageDialog(null,  "请选择商家","提示",JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-				Beanmerchant mc=this.merchant.get(i);
-				if(JOptionPane.showConfirmDialog(this,"确定删除该商家吗？","确认",JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
-					try {
-						(new MerchantManager()).removeMerchant(mc.getMerchant_id(), userManager.currentUser.getClerk_id());
-						//takeawayUtil.MerchantManager.removeMerchant(this.merchant.get(i));
-						this.reloadTable();
-					} catch (BaseException e1) {
-						JOptionPane.showMessageDialog(null, e1.getMessage(),"错误",JOptionPane.ERROR_MESSAGE);
-					}
-					
-				}
-	      }
-	      else if(e.getSource()==this.btnSearch) {
-	    	  this.reloadTable();
-	      }
-
-		}
-		
 	
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource()==this.btnSearch) {
+			String text=this.edtKeyword.getText();
+			takeawayUtil.customerManager.searchuser(text);
+			this.setVisible(true);
+		}
+			
+		
+	}
 }

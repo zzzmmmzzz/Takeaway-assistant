@@ -7,7 +7,8 @@ private String Merchant_id;
   private int Merchant_star;
   private float Merchant_avgc;
   private float Merchant_total;
-
+  public static final String[] tableTitles={"商家编号","商家名","商家星级","人均消费","总销量"};
+  
 public static String getCurrentLoginUser() {
 	return currentLoginUser;
 }
@@ -43,6 +44,16 @@ public float getMerchant_total() {
 }
 public void setMerchant_total(float merchant_total) {
 	Merchant_total = merchant_total;
+}
+public String getCell(int col) {
+	// TODO Auto-generated method stub
+	if(col==0) return String.valueOf(getMerchant_id());
+	else if(col==1) return String.valueOf(getMerchant_name());
+	else if(col==2) return String.valueOf(getMerchant_star());
+	else if(col==3) return String.valueOf(getMerchant_avgc());
+	else if(col==4) return String.valueOf(getMerchant_total());
+	else return "";
+
 }
   
 }

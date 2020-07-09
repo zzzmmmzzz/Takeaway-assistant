@@ -4,22 +4,27 @@ import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Dialog;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+
 import cn.edu.zucc.takeaway.takeawayUtil;
+import cn.edu.zucc.takeaway.model.Beanmerchant;
 import cn.edu.zucc.takeaway.model.Beanuser;
 import cn.edu.zucc.takeaway.util.BaseException;
 
 public class FrmUMadd extends JDialog implements ActionListener{
+	Beanmerchant mc=new Beanmerchant();
 	private JPanel toolBar = new JPanel();
 	private JPanel workPane = new JPanel();
 	private Button btnOk = new Button("×¢²á");
@@ -38,7 +43,7 @@ public class FrmUMadd extends JDialog implements ActionListener{
 	private JTextField edtMerchantAvg = new JTextField(20);
 	private JTextField edtMerchantall = new JTextField(20);
 	
-	public FrmUMadd(Frmmainuser f, String s, boolean b) {
+	public FrmUMadd(Frame f, String s, boolean b) {  //Ìí¼ÓÉÌ¼Ò
 		super(f, s, b);
 		toolBar.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		toolBar.add(this.btnOk);
@@ -54,6 +59,11 @@ public class FrmUMadd extends JDialog implements ActionListener{
 		workPane.add(edtMerchantAvg);
 		workPane.add(labelMerchantall);
 		workPane.add(edtMerchantall);
+		mc.setMerchant_id(edtMerchantid.getText());
+		mc.setMerchant_name(edtMerchantName.getText());
+		mc.setMerchant_star(Integer.parseInt(edtMerchantStar.getText()));
+		mc.setMerchant_avgc(Float.parseFloat(edtMerchantAvg.getText()));
+		mc.setMerchant_total(Float.parseFloat(edtMerchantall.getText()));
 		
 		this.getContentPane().add(workPane, BorderLayout.CENTER);
 		this.setSize(260, 500);
@@ -74,12 +84,14 @@ public class FrmUMadd extends JDialog implements ActionListener{
 			this.setVisible(false);
 		else if(e.getSource()==this.btnOk){
 			
-				/*try {
-					new Frmmainuser();
-				}catch(Exception ex) {
-					JOptionPane.showMessageDialog(null, ex.getMessage(),"´íÎó",JOptionPane.ERROR_MESSAGE);
-					return;
-				}*/
+			
+			try {
+				takeawayUtil.MerchantManager.createMerchant(mc);
+				this.setVisible(false);
+			} catch (BaseException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage(), "´íÎó",JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 			}
 			
 		}

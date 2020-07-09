@@ -81,46 +81,7 @@ public class FrmuserManager extends JDialog implements ActionListener{
 	}
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getSource()==this.btnAdd){
-			FrmUserManager_AddUser dlg=new FrmUserManager_AddUser(this,"添加账号",true);
-			dlg.setVisible(true);
-			if(dlg.getUser()!=null){//刷新表格
-				this.reloadUserTable();
-			}
-		}
-		else if(e.getSource()==this.btnResetPwd){
-			int i=this.userTable.getSelectedRow();
-			if(i<0) {
-				JOptionPane.showMessageDialog(null,  "请选择账号","提示",JOptionPane.ERROR_MESSAGE);
-				return;
-			}
-			if(JOptionPane.showConfirmDialog(this,"确定重置密码吗？","确认",JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
-				String userid=this.tblData[i][0].toString();
-				try {
-					(new userManager()).reg(userid, pwd, pwd2);
-					JOptionPane.showMessageDialog(null,  "密码重置完成","提示",JOptionPane.INFORMATION_MESSAGE);
-				} catch (BaseException e1) {
-					JOptionPane.showMessageDialog(null, e1.getMessage(),"错误",JOptionPane.ERROR_MESSAGE);
-				}
-				
-			}
-		}
-		else if(e.getSource()==this.btnDelete){
-			int i=this.userTable.getSelectedRow();
-			if(i<0) {
-				JOptionPane.showMessageDialog(null,  "请选择账号","提示",JOptionPane.ERROR_MESSAGE);
-				return;
-			}
-			if(JOptionPane.showConfirmDialog(this,"确定删除账号吗？","确认",JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
-				String userid=this.tblData[i][0].toString();
-				try {
-					(new SystemUserManager()).deleteUser(userid);
-					this.reloadUserTable();
-				} catch (BaseException e1) {
-					JOptionPane.showMessageDialog(null, e1.getMessage(),"错误",JOptionPane.ERROR_MESSAGE);
-				}
-				
-			}
-		}
+		
+		
 	}
 }
