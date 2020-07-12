@@ -28,18 +28,21 @@ import cn.edu.zucc.takeaway.takeawayUtil;
 import cn.edu.zucc.takeaway.model.Beangoods_categories;
 import cn.edu.zucc.takeaway.model.Beangoods_details;
 import cn.edu.zucc.takeaway.model.Beanmerchant;
+import cn.edu.zucc.takeaway.model.Beanshop;
 import cn.edu.zucc.takeaway.util.BaseException;
 
 public class Frmorders extends JDialog implements ActionListener {
 private JMenuBar menubar=new JMenuBar();
+private JPanel toolBar = new JPanel();
+private Button btnAdd = new Button("添加到购物车");
 	
 	private JMenu menu_goodManager=new JMenu("订单管理");
 	private JMenu menu_goodcategoriesManager=new JMenu("下单");
 	
-	private JMenuItem  menuItem_Addgoodcategories=new JMenuItem("添加商品类别");
-	private JMenuItem  menuItem_deletegoodcategories=new JMenuItem("删除商品类别");
-	private JMenuItem  menuItem_Addgoods=new JMenuItem("添加商品");
-	private JMenuItem  menuItem_deletegoods=new JMenuItem("删除商品");
+	private JMenuItem  menuItem_Addgoodcategories=new JMenuItem("购物车管理");
+	private JMenuItem  menuItem_deletegoodcategories=new JMenuItem("结算");
+	private JMenuItem  menuItem_Addgoods=new JMenuItem("订单详情");
+	private JMenuItem  menuItem_deletegoods=new JMenuItem("结算");
 	
 	//private FrmLogin dlgLogin=null;
 	private JPanel statusBar = new JPanel();
@@ -135,6 +138,8 @@ private JMenuBar menubar=new JMenuBar();
 		menuItem_deletegoodcategories.addActionListener(this);
 		menubar.add(menu_goodcategoriesManager);
 		
+		
+		
 		this.setJMenuBar(menubar);
 		
 		this.getContentPane().add(new JScrollPane(this.dataTablePlan), BorderLayout.WEST);
@@ -166,6 +171,12 @@ private JMenuBar menubar=new JMenuBar();
 	    this.getContentPane().add(new JScrollPane(this.dataTableStep), BorderLayout.EAST);
 	    
 	   this.reloadPlanTable();
+	   
+	   toolBar.setLayout(new FlowLayout(FlowLayout.RIGHT));
+	   toolBar.add(this.btnAdd);
+	   this.getContentPane().add(toolBar,BorderLayout.AFTER_LAST_LINE);
+	   btnAdd.addActionListener(this);
+	   
 	  //状态栏
 	    statusBar.setLayout(new FlowLayout(FlowLayout.LEFT));
 	    JLabel label=new JLabel("您好!");//修改成   您好！+登陆用户名
@@ -185,14 +196,23 @@ private JMenuBar menubar=new JMenuBar();
 
 	
 	public void actionPerformed(ActionEvent e) {
-		/*if(e.getSource()==this.menuItem_Addgoodcategories) {
-			Frmaddcategories add=new Frmaddcategories(this, "添加类别", true);
+		if(e.getSource()==this.menuItem_Addgoodcategories) {
+			Frmshopping add=new Frmshopping(this, "购物车", true);
 			 add.setVisible(true);
 		}
-		if(e.getSource()==this.menuItem_Addgoods) {
-			Frmaddgoods add=new Frmaddgoods(this,"添加商品",true);
-			add.setVisible(true);
-		}*/
+		else if(e.getSource()==this.btnAdd) {
+			int i=this.dataTableStep.getSelectedRow();
+			if(i<0) {
+				JOptionPane.showMessageDialog(null,  "请选择商家","提示",JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			try {
+				Beanshop p=new Beanshop();
+				
+			}catch (BaseException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage(),"错误",JOptionPane.ERROR_MESSAGE);
+			}
+		}
 	}
 	
 	

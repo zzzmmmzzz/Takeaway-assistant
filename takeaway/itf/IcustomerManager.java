@@ -18,4 +18,5 @@ public interface IcustomerManager {
 	public List<Beancus> searchuser(String text);
 
 	public Beanaddress getAddress(Beancus cus)throws BaseException;
+	public List<Beancus> loadcurrent()  throws BaseException;
 }

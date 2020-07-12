@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JDialog;
@@ -45,6 +46,9 @@ public class Frmaddmodify extends JDialog implements ActionListener{
 		
 		this.btnCancel.addActionListener(this);
 		this.btnOk.addActionListener(this);
+		
+	}
+	public void actionPerformed(ActionEvent e) {
 		
 	}
 

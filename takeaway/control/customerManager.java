@@ -231,4 +231,43 @@ public class customerManager implements IcustomerManager{
 		}
 		return add;
 	}
+	public List<Beancus> loadcurrent()  throws BaseException {
+		List<Beancus> result=new ArrayList<Beancus>();
+		Connection conn=null;
+		try {
+			conn=DBUtil.getConnection();
+			String sql="select cus_id,cus_name,cus_sex,cus_password,cus_tel,cus_email,cus_city,cus_regtime,cus_vip"
+					+ " from cus where cus_id=1";
+			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+			//pst.setString(1, Beanmerchant.currentLoginUser);
+			java.sql.ResultSet rs=pst.executeQuery();
+			while(rs.next()) {
+				Beancus cus = new Beancus();
+				cus.setCus_id(rs.getString(1));
+			    cus.setCus_name(rs.getString(2));
+			    cus.setCus_sex(rs.getInt(3));
+			    cus.setCus_password(rs.getString(4));
+			    cus.setCus_tel(rs.getString(5));
+			    cus.setCus_email(rs.getString(6));
+			    cus.setCus_city(rs.getString(7));
+			    cus.setCus_regtime(rs.getDate(8));
+			    cus.setCus_vip(rs.getInt(9));
+				result.add(cus);
+			}
+			
+		}catch (SQLException e) {
+		e.printStackTrace();
+		throw new DbException(e);
+	}
+	finally{
+		if(conn!=null)
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
+	return result;
+	}
 }

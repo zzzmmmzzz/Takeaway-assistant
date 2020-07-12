@@ -10,6 +10,7 @@ import cn.edu.zucc.takeaway.itf.IgoodsManager;
 import cn.edu.zucc.takeaway.model.Beangoods_categories;
 import cn.edu.zucc.takeaway.model.Beangoods_details;
 import cn.edu.zucc.takeaway.model.Beanmerchant;
+import cn.edu.zucc.takeaway.model.Beanshop;
 import cn.edu.zucc.takeaway.util.BaseException;
 import cn.edu.zucc.takeaway.util.BusinessException;
 import cn.edu.zucc.takeaway.util.DBUtil;
@@ -186,6 +187,41 @@ public class goodsManager implements IgoodsManager{
 		}
 		
 		
+	}
+
+	public List<Beanshop> loadallshop() {
+		// TODO Auto-generated method stub
+		List<Beanshop> result=new ArrayList<Beanshop>();
+		Connection conn=null;
+		try {
+			conn=DBUtil.getConnection();
+			String sql="select Merchant_name,goods_name,goods_price,goods_amount from shop";
+			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+			//pst.setString(1, gc.getCategories_id());
+			java.sql.ResultSet rs=pst.executeQuery();
+			while(rs.next()) {
+				Beanshop shop = new Beanshop();
+				shop.setMerchant_name(rs.getString(1));
+			    shop.setGoods_name(rs.getString(2));
+			    shop.setGoods_price(rs.getFloat(3));
+			    shop.setGoods_amount(rs.getInt(4));
+				result.add(shop);
+			}
+			
+		}catch (SQLException e) {
+		e.printStackTrace();
+		//throw new DbException(e);
+	}
+	finally{
+		if(conn!=null)
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
+	return result;
 	}
 	
 	

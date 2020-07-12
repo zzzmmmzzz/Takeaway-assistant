@@ -5,7 +5,7 @@ import java.awt.Button;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.LayoutManager;
-import java.awt.List;
+import java.util.List;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,12 +35,12 @@ public class FrmuserManager extends JDialog implements ActionListener{
 	
 	private void reloadUserTable(){
 		try {
-			List<Beanuser> users=(new userManager()).loadAllUsers(false);
+			List<Beanuser> users=(new userManager()).loadAllUsers();
 			tblData =new Object[users.size()][3];
 			for(int i=0;i<users.size();i++){
-				tblData[i][0]=users.get(i).getUserid();
-				tblData[i][1]=users.get(i).getUsername();
-				tblData[i][2]=users.get(i).getUsertype();
+				tblData[i][0]=users.get(i).getClerk_id();
+				tblData[i][1]=users.get(i).getClerk_name();
+				tblData[i][2]=users.get(i).getClerk_password();
 			}
 			tablmod.setDataVector(tblData,tblTitle);
 			this.userTable.validate();

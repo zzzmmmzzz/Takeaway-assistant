@@ -19,7 +19,7 @@ import cn.edu.zucc.takeaway.util.DbException;
 public class userManager implements IuserManager {
 
 	public static Beanuser currentUser=null;
-	public List<Beanuser> loadAllUsers(boolean withDeletedUser)throws BaseException{
+	public List<Beanuser> loadAllUsers()throws BaseException{
 		List<Beanuser> result=new ArrayList<Beanuser>();
 		Connection conn=null;
 		try {

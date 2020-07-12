@@ -130,6 +130,10 @@ import cn.edu.zucc.takeaway.takeawayUtil;
 				list.setVisible(true);
 				
 			}
+			else if(e.getSource()==this.menuItem_userlist) {
+				FrmuserManager user=new FrmuserManager(this,"π‹¿Ì‘±",true);
+				user.setVisible(true);
+			}
 		}
 
 		

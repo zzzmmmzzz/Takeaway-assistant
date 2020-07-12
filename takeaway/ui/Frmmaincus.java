@@ -98,6 +98,10 @@ public class Frmmaincus extends JFrame implements ActionListener {
 			Frmorders ord=new Frmorders();
 			ord.setVisible(true);
 		}
+		if(e.getSource()==this.menuItem_cuslist) {
+			FrmCcuslist list=new FrmCcuslist(this,"Œ“µƒ’À∫≈",true);
+			list.setVisible(true);
+		}
 	}
  
 
