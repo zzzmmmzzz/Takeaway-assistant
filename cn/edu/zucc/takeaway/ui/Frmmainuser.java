@@ -106,23 +106,7 @@ import cn.edu.zucc.takeaway.takeawayUtil;
 		
 		}
 		public void actionPerformed(ActionEvent e) {
-			/*if (e.getSource() == this.btnLogin) {
-				String userid=this.edtUserId.getText();
-				String pwd=new String(this.edtPwd.getPassword());
-				try {
-					BeanUser.currentLoginUser= PersonPlanUtil.userManager.login(userid, pwd);
-				} catch (BaseException e1) {
-					JOptionPane.showMessageDialog(null, e1.getMessage(), "错误",JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-				this.setVisible(false);
-				
-			} else if (e.getSource() == this.btnCancel) {
-				System.exit(0);
-			} else if(e.getSource()==this.btnRegister){
-				FrmRegister dlg=new FrmRegister(this,"注册",true);
-				dlg.setVisible(true);
-			}*/
+			
 			if(e.getSource()==this.menuItem_Merchantadd) {
 					//FrmUMadd UMadd=new FrmUMadd(this,"添加商户",true);
 					//UMadd.setVisible(true);
@@ -144,6 +128,21 @@ import cn.edu.zucc.takeaway.takeawayUtil;
 			else if(e.getSource()==this.menuItem_riderlist) {
 				FrmUriderlist list =new FrmUriderlist(this,"骑手管理",true);
 				list.setVisible(true);
+				
+			}
+			else if(e.getSource()==this.menuItem_userlist) {
+				FrmuserManager user=new FrmuserManager(this,"管理员",true);
+				user.setVisible(true);
+			}
+			else if(e.getSource()==this.menuItem_riderwage) {
+				Frmriderpay pay;
+				try {
+					pay = new Frmriderpay(this,"骑手收入",true);
+					pay.setVisible(true);
+				} catch (BaseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 			}
 		}

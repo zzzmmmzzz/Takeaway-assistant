@@ -7,6 +7,8 @@ import java.util.List;
 
 
 import cn.edu.zucc.takeaway.itf.IuserManager;
+import cn.edu.zucc.takeaway.model.Beanaddress;
+import cn.edu.zucc.takeaway.model.Beancus;
 import cn.edu.zucc.takeaway.model.Beanuser;
 import cn.edu.zucc.takeaway.util.BaseException;
 import cn.edu.zucc.takeaway.util.BusinessException;
@@ -17,7 +19,7 @@ import cn.edu.zucc.takeaway.util.DbException;
 public class userManager implements IuserManager {
 
 	public static Beanuser currentUser=null;
-	public List<Beanuser> loadAllUsers(boolean withDeletedUser)throws BaseException{
+	public List<Beanuser> loadAllUsers()throws BaseException{
 		List<Beanuser> result=new ArrayList<Beanuser>();
 		Connection conn=null;
 		try {
@@ -177,4 +179,6 @@ public class userManager implements IuserManager {
 		
 	
 	}
+	
+	
 }

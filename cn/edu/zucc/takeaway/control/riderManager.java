@@ -9,6 +9,7 @@ import cn.edu.zucc.takeaway.itf.IriderManager;
 import cn.edu.zucc.takeaway.itf.IuserManager;
 import cn.edu.zucc.takeaway.model.Beanmerchant;
 import cn.edu.zucc.takeaway.model.Beanrider;
+import cn.edu.zucc.takeaway.model.Beanrider_wage;
 import cn.edu.zucc.takeaway.util.BaseException;
 import cn.edu.zucc.takeaway.util.BusinessException;
 import cn.edu.zucc.takeaway.util.DBUtil;
@@ -32,6 +33,40 @@ public class riderManager implements IriderManager{
 				rider.setRider_name(rs.getString(2));
 				rider.setRider_workdate(rs.getDate(3));
 				rider.setRider_identity(rs.getString(4));
+				result.add(rider);
+			}
+			
+		}catch (SQLException e) {
+		e.printStackTrace();
+		throw new DbException(e);
+	}
+	finally{
+		if(conn!=null)
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
+	return result;
+	}
+	public List<Beanrider_wage> listwage()throws BaseException {
+		List<Beanrider_wage> result=new ArrayList<Beanrider_wage>();
+		Connection conn=null;
+		try {
+			conn=DBUtil.getConnection();
+			String sql="select rider_id,order_id,order_amount"
+					+ " from rider";
+			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+			//pst.setString(1, Beanmerchant.currentLoginUser);
+			java.sql.ResultSet rs=pst.executeQuery();
+			while(rs.next()) {
+				Beanrider_wage rider = new Beanrider_wage();
+				rider.setRider_id(rs.getString(1));
+				rider.setOrder_id(rs.getString(2));
+				rider.setOrder_amount(rs.getFloat(3));
+				//rider.setRider_identity(rs.getString(4));
 				result.add(rider);
 			}
 			

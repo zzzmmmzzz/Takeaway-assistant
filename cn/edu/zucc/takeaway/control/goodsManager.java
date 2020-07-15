@@ -10,6 +10,9 @@ import cn.edu.zucc.takeaway.itf.IgoodsManager;
 import cn.edu.zucc.takeaway.model.Beangoods_categories;
 import cn.edu.zucc.takeaway.model.Beangoods_details;
 import cn.edu.zucc.takeaway.model.Beanmerchant;
+import cn.edu.zucc.takeaway.model.Beanorder_detail;
+import cn.edu.zucc.takeaway.model.Beanorders;
+import cn.edu.zucc.takeaway.model.Beanshop;
 import cn.edu.zucc.takeaway.util.BaseException;
 import cn.edu.zucc.takeaway.util.BusinessException;
 import cn.edu.zucc.takeaway.util.DBUtil;
@@ -187,9 +190,179 @@ public class goodsManager implements IgoodsManager{
 		
 		
 	}
+
+	public List<Beanshop> addgoods(Beangoods_details de) {
+		// TODO Auto-generated method stub
+		List<Beanshop> result=new ArrayList<Beanshop>();
+		Connection conn=null;
+		try {
+			conn=DBUtil.getConnection();
+			String sql="insert into shop( goods_name,goods_amount,goods_price,goods_reduce )"
+					+ "values (?,1,?,?)";
+			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+			pst.setString(1, de.getGoods_name());
+            pst.setFloat(2, de.getGoods_price());
+            pst.setFloat(3, de.getGoods_reduce());
+            pst.execute();
+            
+		}catch (SQLException e) {
+		e.printStackTrace();
+		//throw new DbException(e);
+	}
+	finally{
+		if(conn!=null)
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
+	return result;
+	}
 	
+	public List<Beanshop> listshop(){
+		List<Beanshop> result=new ArrayList<Beanshop>();
+		Connection conn=null;
+		try {
+			conn=DBUtil.getConnection();
+			String sql="select goods_name,goods_amount,goods_price,goods_reduce from shop ";
+			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+			java.sql.ResultSet rs=pst.executeQuery();
+			while(rs.next()) {
+				Beanshop shop = new Beanshop();
+				//shop.setMerchant_name(rs.getString(1));
+			    shop.setGoods_name(rs.getString(1));
+			    shop.setGoods_price(rs.getFloat(3));
+			    shop.setGoods_amount(rs.getInt(2));
+			    shop.setGoods_reduce(rs.getFloat(4));
+				result.add(shop);
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+			//throw new DbException(e);
+		}
+		finally{
+			if(conn!=null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		return result;
+	}
 	
+	public List<Beanshop> pay(){
+		List<Beanshop> result=new ArrayList<Beanshop>();   
+		Connection conn=null;
+		try {
+			conn=DBUtil.getConnection();
+			String sql="select sum(goods_price) from shop";
+			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+			java.sql.ResultSet rs=pst.executeQuery();
+		}catch (SQLException e) {
+			e.printStackTrace();
+			//throw new DbException(e);
+		}
+		finally{
+			if(conn!=null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		return result;
+	}
 	
-	
-	
+	public void delshop(){
+		Connection conn=null;
+		try {
+			conn=DBUtil.getConnection();
+			String sql="delete from shop";
+			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+			pst.execute();
+		}catch (SQLException e) {
+			e.printStackTrace();
+			//throw new DbException(e);
+		}
+		finally{
+			if(conn!=null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+
+		
+	}
+	public List<Beanorders> loadAllord() throws BaseException{
+		List<Beanorders> result=new ArrayList<Beanorders>();   
+		Connection conn=null;
+		try {
+			conn=DBUtil.getConnection();
+			String sql="select rider_id,cus_id,order_start_time,address_id from orders ";
+			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+			java.sql.ResultSet rs=pst.executeQuery();
+			while(rs.next()) {
+				Beanorders shop = new Beanorders();
+				//shop.setMerchant_name(rs.getString(1));
+			    shop.setRider_id(rs.getString(1));
+			    shop.setCus_id(rs.getString(2));
+			    shop.setOrder_start_time(rs.getDate(3));
+			    shop.setAddress_id(rs.getInt(4));
+				result.add(shop);
+		}
+		}catch (SQLException e) {
+			e.printStackTrace();
+			//throw new DbException(e);
+		}
+		finally{
+			if(conn!=null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		return result;
+	}
+	public List<Beanorder_detail> loaddetail(Beanorders curPlan) throws BaseException{
+		List<Beanorder_detail> result=new ArrayList<Beanorder_detail>();   
+		Connection conn=null;
+		try {
+			conn=DBUtil.getConnection();
+			String sql="select order_id,cnt,goods_price,goods_reduce from order_detail ";
+			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+			java.sql.ResultSet rs=pst.executeQuery();
+			while(rs.next()) {
+				Beanorder_detail shop = new Beanorder_detail();
+				//shop.setMerchant_name(rs.getString(1));
+			    shop.setOrder_id(rs.getString(1));
+			    shop.setCnt(rs.getInt(2));
+			    shop.setGoods_price(rs.getFloat(3));
+			    shop.setGoods_reduce(rs.getFloat(4));
+				result.add(shop);
+		}
+		}catch (SQLException e) {
+			e.printStackTrace();
+			//throw new DbException(e);
+		}
+		finally{
+			if(conn!=null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		return result;
+	}
 }

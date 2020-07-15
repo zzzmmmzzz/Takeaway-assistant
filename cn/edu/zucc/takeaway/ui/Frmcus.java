@@ -81,6 +81,7 @@ public class Frmcus extends JDialog implements ActionListener {
 			
 		} else if (e.getSource() == this.btnCancel) {
 			System.exit(0);
-		} 
+		}
+		
 	}
 }

@@ -90,10 +90,18 @@ public class Frmmaincus extends JFrame implements ActionListener {
 	
 	}
 	public void actionPerformed(ActionEvent e) {
-		/*if(e.getSource()==this.menuItem_Merchantlist) {
-			FrmUMerchantManager fum= new FrmUMerchantManager(this,"商家管理",true);
-			fum.setVisible(true);
-		}*/
+		if(e.getSource()==this.menuItem_address) {
+			Frmaddress add= new Frmaddress(this,"地址管理",true);
+			add.setVisible(true);
+		}
+		if(e.getSource()==this.menuItem_Merchantlist) {
+			Frmorders ord=new Frmorders();
+			ord.setVisible(true);
+		}
+		if(e.getSource()==this.menuItem_cuslist) {
+			FrmCcuslist list=new FrmCcuslist(this,"我的账号",true);
+			list.setVisible(true);
+		}
 	}
  
 

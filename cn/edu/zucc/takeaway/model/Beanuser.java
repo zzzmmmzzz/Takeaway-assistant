@@ -30,5 +30,9 @@ public String getClerk_password() {
 public void setClerk_password(String clerk_password) {
 	this.clerk_password = clerk_password;
 }
+public Object getUserid() {
+	// TODO Auto-generated method stub
+	return null;
+}
   
 }

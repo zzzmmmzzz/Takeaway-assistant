@@ -88,5 +88,13 @@ public int getOrder_state() {
 public void setOrder_state(int order_state) {
 	this.order_state = order_state;
 }
-  
+public String getCell(int col) {
+	// TODO Auto-generated method stub
+	if(col==0) return rider_id;
+	else if(col==1) return cus_id;
+	else if(col==2) return String.valueOf(order_start_time);
+	else if(col==3) return String.valueOf(address_id);
+	
+	else return "";
+} 
 }

@@ -37,5 +37,14 @@ public float getGoods_reduce() {
 public void setGoods_reduce(float goods_reduce) {
 	this.goods_reduce = goods_reduce;
 }
+public String getCell(int col) {
+	// TODO Auto-generated method stub
+	if(col==0) return order_id;
+	else if(col==1) return String.valueOf(cnt);
+	else if(col==2) return String.valueOf(goods_price);
+	else if(col==3) return String.valueOf(goods_reduce);
+	
+	else return "";
+}
   
 }

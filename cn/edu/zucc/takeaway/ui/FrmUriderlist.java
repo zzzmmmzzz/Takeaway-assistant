@@ -31,6 +31,8 @@ public class FrmUriderlist extends JDialog implements ActionListener{
 	
 	private JComboBox cmbReadertype=null;
 	
+	private Button btnAdd = new Button("添加骑手");
+	
 	private JTextField edtKeyword = new JTextField(10);
 	private Button btnSearch = new Button("查询");
 	
@@ -81,7 +83,7 @@ public class FrmUriderlist extends JDialog implements ActionListener{
 		
 		toolBar.setLayout(new FlowLayout(FlowLayout.LEFT));
 		toolBar.add(MerchantTable);
-		//toolBar.add(btnAdd);
+		toolBar.add(btnAdd);
 		//toolBar.add(this.btnDelete);
 		//toolBar.add(btnModify);
 		toolBar.add(edtKeyword);
@@ -104,7 +106,7 @@ public class FrmUriderlist extends JDialog implements ActionListener{
 		this.validate();
 		
 
-		//this.btnAdd.addActionListener(this);
+		this.btnAdd.addActionListener(this);
 		//this.btnDelete.addActionListener(this);
 		//this.btnModify.addActionListener(this);
 		this.btnSearch.addActionListener(this);
@@ -121,6 +123,11 @@ public class FrmUriderlist extends JDialog implements ActionListener{
 			String text=this.edtKeyword.getText();
 			takeawayUtil.riderManager.searchrider(text);
 			this.setVisible(true);
+		}
+		if(e.getSource()==this.btnAdd) {
+			FrmUaddrider add=new FrmUaddrider(this,"添加骑手",true);
+			add.setVisible(true);
+			
 		}
 			
 		

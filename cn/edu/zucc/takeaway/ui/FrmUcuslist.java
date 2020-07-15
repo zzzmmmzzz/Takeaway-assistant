@@ -25,7 +25,9 @@ import cn.edu.zucc.takeaway.control.MerchantManager;
 import cn.edu.zucc.takeaway.control.customerManager;
 import cn.edu.zucc.takeaway.model.Beancus;
 import cn.edu.zucc.takeaway.model.Beanmerchant;
+import cn.edu.zucc.takeaway.model.Beanrider;
 import cn.edu.zucc.takeaway.util.BaseException;
+import cn.edu.zucc.takeaway.util.BusinessException;
 
 public class FrmUcuslist extends JDialog implements ActionListener{
 	private JPanel toolBar = new JPanel();
@@ -70,7 +72,32 @@ public class FrmUcuslist extends JDialog implements ActionListener{
 			e.printStackTrace();
 		}
 	}
-	
+	private void loadTable() throws BaseException{
+		List<Beancus> cus=null;
+		String s=this.edtKeyword.getText().trim();
+		if(!"".equals(s)) {
+			try {
+				cus=takeawayUtil.customerManager.searchuser(this.edtKeyword.getText());
+				if(cus==null) throw new BusinessException("²éÑ¯ÎÞ½áÊø");
+				tblData =new Object[1][9];
+				tblData[0][0]=cus.get(0).getCus_id();
+				tblData[0][1]=cus.get(0).getCus_name();	
+				tblData[0][2]=cus.get(0).getCus_sex();
+				tblData[0][3]=cus.get(0).getCus_password();
+				tblData[0][4]=cus.get(0).getCus_tel();
+				tblData[0][5]=cus.get(0).getCus_email();
+				tblData[0][6]=cus.get(0).getCus_city();
+				tblData[0][7]=cus.get(0).getCus_regtime();
+				tblData[0][8]=cus.get(0).getCus_vip();
+				tablmod.setDataVector(tblData,tblTitle);
+				this.MerchantTable.validate();
+				this.MerchantTable.repaint();
+			}catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 	public FrmUcuslist(Frame f, String s, boolean b) {
 		super(f, s, b);
 		
@@ -127,9 +154,12 @@ public class FrmUcuslist extends JDialog implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==this.btnSearch) {
-			String text=this.edtKeyword.getText();
-			takeawayUtil.customerManager.searchuser(text);
-			this.setVisible(true);
+			 try {
+					this.loadTable();
+				} catch (BaseException e1) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, e1.getMessage(),"´íÎó",JOptionPane.ERROR_MESSAGE);
+				}
 		}
 			
 		

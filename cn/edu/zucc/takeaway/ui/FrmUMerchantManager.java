@@ -30,6 +30,7 @@ import cn.edu.zucc.takeaway.control.userManager;
 import cn.edu.zucc.takeaway.model.Beancus;
 import cn.edu.zucc.takeaway.model.Beanmerchant;
 import cn.edu.zucc.takeaway.util.BaseException;
+import cn.edu.zucc.takeaway.util.BusinessException;
 
 
 
@@ -72,7 +73,28 @@ public class FrmUMerchantManager extends JDialog implements ActionListener {
 			e.printStackTrace();
 		}
 	}
-	
+	private void loadTable() throws BaseException{
+		List<Beanmerchant> mer=null;
+		String s=this.edtKeyword.getText().trim();
+		if(!"".equals(s)) {
+			try {
+				mer=takeawayUtil.MerchantManager.searchuser(this.edtKeyword.getText());
+				if(mer==null) throw new BusinessException("查询无结束");
+				tblData =new Object[1][5];
+				tblData[0][0]=merchant.get(0).getMerchant_id();
+				tblData[0][1]=merchant.get(0).getMerchant_name();	
+				tblData[0][2]=merchant.get(0).getMerchant_star();
+				tblData[0][3]=merchant.get(0).getMerchant_avgc();
+				tblData[0][4]=merchant.get(0).getMerchant_total();
+				tablmod.setDataVector(tblData,tblTitle);
+				this.MerchantTable.validate();
+				this.MerchantTable.repaint();
+			}catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 	public FrmUMerchantManager(Frame f, String s, boolean b) {
 		super(f, s, b);
 		
@@ -92,7 +114,7 @@ public class FrmUMerchantManager extends JDialog implements ActionListener {
 		
 		toolBar.setLayout(new FlowLayout(FlowLayout.LEFT));
 		toolBar.add(MerchantTable);
-		toolBar.add(btnAdd);
+		toolBar.add(this.btnAdd);
 		toolBar.add(this.btnDelete);
 		toolBar.add(btnModify);
 		toolBar.add(edtKeyword);
@@ -131,6 +153,7 @@ public class FrmUMerchantManager extends JDialog implements ActionListener {
 			// TODO Auto-generated method stub
 	      if(e.getSource()==this.btnAdd) {
 	    	  FrmUMadd dlg =new FrmUMadd(this,"添加",true);
+	    	  System.out.print("1111");
 	    	  dlg.setVisible(true);
 	    	  
 	      }
@@ -153,7 +176,15 @@ public class FrmUMerchantManager extends JDialog implements ActionListener {
 				}
 	      }
 	      else if(e.getSource()==this.btnSearch) {
-	    	  this.reloadTable();
+	    	 // String key=this.edtKeyword.getText();
+	    	 // takeawayUtil.MerchantManager.searchuser(key);
+	    	  try {
+				this.loadTable();
+			} catch (BaseException e1) {
+				// TODO Auto-generated catch block
+				JOptionPane.showMessageDialog(null, e1.getMessage(),"错误",JOptionPane.ERROR_MESSAGE);
+			}
+	    	  
 	      }
 
 		}

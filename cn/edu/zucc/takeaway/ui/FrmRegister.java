@@ -99,7 +99,7 @@ public class FrmRegister extends JDialog implements ActionListener {
 		if(e.getSource()==this.btnCancel)
 			this.setVisible(false);
 		else if(e.getSource()==this.btnOk){
-			String userid=this.edtUserId.getText();
+			/*String userid=this.edtUserId.getText();
 			String pwd1=new String(this.edtPwd.getPassword());
 			String pwd2=new String(this.edtPwd2.getPassword());
 			try {
@@ -108,7 +108,7 @@ public class FrmRegister extends JDialog implements ActionListener {
 			} catch (BaseException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage(),"´íÎó",JOptionPane.ERROR_MESSAGE);
 				return;
-			}
+			}*/
 			
 		}
 			

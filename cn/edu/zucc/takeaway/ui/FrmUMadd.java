@@ -59,11 +59,7 @@ public class FrmUMadd extends JDialog implements ActionListener{
 		workPane.add(edtMerchantAvg);
 		workPane.add(labelMerchantall);
 		workPane.add(edtMerchantall);
-		mc.setMerchant_id(edtMerchantid.getText());
-		mc.setMerchant_name(edtMerchantName.getText());
-		mc.setMerchant_star(Integer.parseInt(edtMerchantStar.getText()));
-		mc.setMerchant_avgc(Float.parseFloat(edtMerchantAvg.getText()));
-		mc.setMerchant_total(Float.parseFloat(edtMerchantall.getText()));
+		
 		
 		this.getContentPane().add(workPane, BorderLayout.CENTER);
 		this.setSize(260, 500);
@@ -87,9 +83,13 @@ public class FrmUMadd extends JDialog implements ActionListener{
 			
 			try {
 				//String merchant_id=this.edtMerchantid.getText();
-			
+				mc.setMerchant_id(edtMerchantid.getText());
+				mc.setMerchant_name(edtMerchantName.getText());
+				mc.setMerchant_star(Integer.parseInt(edtMerchantStar.getText()));
+				mc.setMerchant_avgc(Float.parseFloat(edtMerchantAvg.getText()));
+				mc.setMerchant_total(Float.parseFloat(edtMerchantall.getText()));
 				takeawayUtil.MerchantManager.createMerchant(mc);
-				this.setVisible(true);
+				this.setVisible(false);
 			} catch (BaseException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage(), "´íÎó",JOptionPane.ERROR_MESSAGE);
 				return;

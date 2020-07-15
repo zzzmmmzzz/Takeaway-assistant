@@ -16,7 +16,7 @@ import cn.edu.zucc.takeaway.util.DbException;
 
 public class MerchantManager implements IMerchantManager{
 
-	public List<Beanmerchant> searchuser(String text) {
+	public List<Beanmerchant> searchuser(String text) throws BaseException{
 		// TODO Auto-generated method stub
 		List<Beanmerchant> result=new ArrayList<Beanmerchant>();
 		Connection conn=null;
@@ -35,8 +35,8 @@ public class MerchantManager implements IMerchantManager{
 				mc.setMerchant_avgc(rs.getFloat(4));
 				mc.setMerchant_total(rs.getFloat(5));
 				result.add(mc);
-			}
 			
+			}
 		}catch (SQLException e) {
 		 e.printStackTrace();
 		 //throw new DbException(e);
@@ -50,7 +50,7 @@ public class MerchantManager implements IMerchantManager{
 				e.printStackTrace();
 			}
 	}
-	return result;
+		return result;
 	}
      public  void createMerchant(Beanmerchant mc) throws BaseException{
 		
@@ -69,14 +69,14 @@ public class MerchantManager implements IMerchantManager{
 			if(rs.next()) throw new BusinessException("商家已存在");
 			rs.close();
 			pst.close();
-			sql="insert into merchant(Merchant_id,Merchant_name,Merchant_star,Merchant_avgc,Mercahnt_total) "
+			sql="insert into merchant(Merchant_id,Merchant_name,Merchant_star,Merchant_avgc,Merchant_total) "
 					+ "values(?,?,?,?,?)";
 			pst=conn.prepareStatement(sql);
 			pst.setString(1, mc.getMerchant_id());
 			pst.setString(2, mc.getMerchant_name());
 			pst.setInt(3, mc.getMerchant_star());
 			pst.setFloat(4, mc.getMerchant_avgc());
-			pst.setFloat(4, mc.getMerchant_total());
+			pst.setFloat(5, mc.getMerchant_total());
 			pst.execute();
 			pst.close();
 		} catch (SQLException e) {

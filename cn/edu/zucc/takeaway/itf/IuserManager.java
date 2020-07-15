@@ -1,5 +1,9 @@
 package cn.edu.zucc.takeaway.itf;
 
+import java.util.List;
+
+import cn.edu.zucc.takeaway.model.Beanaddress;
+import cn.edu.zucc.takeaway.model.Beancus;
 import cn.edu.zucc.takeaway.model.Beanuser;
 import cn.edu.zucc.takeaway.util.BaseException;
 
@@ -25,5 +29,7 @@ public interface IuserManager {
 	 * @param newPwd2 重复输入的新密码
 	 */
 	public void changePwd(Beanuser user, String oldPwd,String newPwd, String newPwd2)throws BaseException;
+	//public Beanaddress getAddress(Beancus cus)throws BaseException;
+	public List<Beanuser> loadAllUsers()throws BaseException;
 
 }
